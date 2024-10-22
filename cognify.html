@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cognify - Smart Solutions. Real Impact.</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="cogfavicon.png">
+
+    <!-- iMessage / Social Media Preview -->
+    <meta property="og:title" content="Cognify - Smart Solutions. Real Impact.">
+    <meta property="og:description" content="Empowering businesses with cutting-edge AI solutions to solve real-world challenges.">
+    <meta property="og:image" content="cog-regpreview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://regulaite.com/cognify">
+
     <style>
         /* General Reset */
         * {
@@ -115,7 +125,7 @@
     <div class="hero">
         <h1>Cognify</h1>
         <p>Smart Solutions. Real Impact.</p>
-        <button onclick="contactUs()">Work With Us</button>
+        <button onclick="sendEmail()">Work With Us</button>
     </div>
 
     <!-- Footer -->
@@ -124,10 +134,9 @@
     </footer>
 
     <script>
-        function contactUs() {
-            alert("Thank you for your interest! We will get back to you soon.");
+        function sendEmail() {
+            window.location.href = "mailto:cognify@ragulatie.com?subject=Inquiry%20from%20Website&body=Hello%20Cognify,%0D%0A%0D%0AI%20am%20interested%20in%20your%20services.%20Please%20get%20back%20to%20me.%0D%0A%0D%0ARegards,%0D%0A[Your%20Name]";
         }
     </script>
 </body>
 </html>
-
