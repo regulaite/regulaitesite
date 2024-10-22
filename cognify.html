@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognify - Smart Solutions. Real Impact.</title>
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #0A0A0A;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            position: absolute;
+            top: 20px;
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            text-decoration: none;
+            color: #0A0A0A;
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #555555;
+        }
+
+        .hero button {
+            padding: 15px 40px;
+            font-size: 1rem;
+            background-color: #0A0A0A;
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .hero button:hover {
+            background-color: #333333;
+        }
+
+        /* Footer */
+        footer {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #888888;
+        }
+
+        footer a {
+            color: #0A0A0A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h3>Cognify</h3>
+        </div>
+        <a href="#contact">Contact Us</a>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Cognify</h1>
+        <p>Smart Solutions. Real Impact.</p>
+        <button onclick="contactUs()">Work With Us</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Cognify. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function contactUs() {
+            alert("Thank you for your interest! We will get back to you soon.");
+        }
+    </script>
+</body>
+</html>
+
