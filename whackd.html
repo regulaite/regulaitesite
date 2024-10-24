@@ -15,16 +15,72 @@
   <meta name="apple-touch-icon" content="whackd-regpreview.png"/>
 
   <style>
-    body{margin:0;padding:0;background-color:#0d0d0d;color:#f5f5f5;font-family:'Arial',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;flex-direction:column;text-align:center}
-    header{padding:50px 20px}h1{font-size:3rem;margin-bottom:0.5rem;color:#f04848}
-    h2{font-size:1.5rem;margin-top:0;color:#adadad}
-    section{width:80%;max-width:800px}
-    p{text-align:left;line-height:1.6;margin-bottom:15px}
-    .button-container{margin:30px 0}
-    .btn{background-color:#f04848;color:#fff;padding:15px 30px;text-decoration:none;font-size:1.2rem;border-radius:5px;transition:background-color .3s}
-    .btn:hover{background-color:#d43d3d}
-    .footer{text-align:center;padding:20px;background-color:#1f1f1f;width:100%;position:fixed;bottom:0;left:0}
-    .gps-coordinates{position:fixed;bottom:10px;left:10px;font-size:.9rem;color:#f04848}
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d0d0d;
+      color: #f5f5f5;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    header {
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: #f04848;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      color: #adadad;
+    }
+    section {
+      width: 80%;
+      max-width: 800px;
+    }
+    p {
+      text-align: left;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .button-container {
+      margin: 30px 0;
+    }
+    .btn {
+      background-color: #f04848;
+      color: #fff;
+      padding: 15px 30px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #d43d3d;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1f1f1f;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+    }
+    .gps-coordinates {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      font-size: 0.9rem;
+      color: #f04848;
+    }
   </style>
 </head>
 <body>
@@ -62,10 +118,13 @@
     const now = new Date();
     const minutes = now.getMinutes();
 
-    // Generate a random shift between 1 and 25, excluding 9
     function getRandomShift() {
-      let shift = Math.floor(Math.random() * 25) + 1;
-      return shift === 9 ? getRandomShift() : shift; // Re-roll if shift is 9
+      let shift;
+      do {
+        shift = Math.floor(Math.random() * 25) + 1;
+      } while (shift === 17); // Exclude shift 17
+      console.log(`Random shift chosen: ${shift}`);
+      return shift;
     }
 
     const randomShift = getRandomShift();
@@ -75,20 +134,22 @@
         document.querySelectorAll("[id]").forEach(el => {
           const originalText = el.getAttribute('data-original') || el.innerText;
           el.innerText = caesarCipher(originalText, shift);
-          el.setAttribute('data-original', originalText); // Store the original text
+          el.setAttribute('data-original', originalText);
         });
       }, 500); // 0.5 second delay
     }
 
+    console.log(`Is proper deciphering time: ${minutes >= 55 && minutes <= 59}`);
+
     if (minutes === 59) {
       setTimeout(() => {
         document.getElementById("gps-coordinates").innerText = caesarDecipher(
-          document.getElementById("gps-coordinates").innerText, 9
+          document.getElementById("gps-coordinates").innerText, 17
         );
         document.getElementById("gps-coordinates").style.display = "block";
       }, 500);
     } else if (minutes >= 55) {
-      applyCipherWithDelay(9);
+      applyCipherWithDelay(17);
     } else {
       applyCipherWithDelay(randomShift);
     }
