@@ -51,18 +51,31 @@
 
   <script>
     function caesarCipher(str, shift) {
-      return str.split('').map(char => (char === '$' ? char : /[a-zA-Z]/.test(char) ? String.fromCharCode(((char.charCodeAt(0) - (char < 'a' ? 65 : 97) + shift) % 26) + (char < 'a' ? 65 : 97)) : char)).join('');
+      return str.split('').map(char => (char === '$' ? char : /[a-zA-Z]/.test(char) ? 
+        String.fromCharCode(((char.charCodeAt(0) - (char < 'a' ? 65 : 97) + shift) % 26) + (char < 'a' ? 65 : 97)) : char)).join('');
     }
+
     function caesarDecipher(str, shift) {
       return caesarCipher(str, 26 - shift);
     }
 
-    const now = new Date(), minutes = now.getMinutes(), randomShift = Math.floor(Math.random() * 25) + 1;
+    const now = new Date();
+    const minutes = now.getMinutes();
+
+    // Generate a random shift between 1 and 25, excluding 9
+    function getRandomShift() {
+      let shift = Math.floor(Math.random() * 25) + 1;
+      return shift === 9 ? getRandomShift() : shift; // Re-roll if shift is 9
+    }
+
+    const randomShift = getRandomShift();
 
     function applyCipherWithDelay(shift) {
       setTimeout(() => {
         document.querySelectorAll("[id]").forEach(el => {
-          el.innerText = caesarCipher(el.innerText, shift);
+          const originalText = el.getAttribute('data-original') || el.innerText;
+          el.innerText = caesarCipher(originalText, shift);
+          el.setAttribute('data-original', originalText); // Store the original text
         });
       }, 500); // 0.5 second delay
     }
