@@ -10,10 +10,11 @@
             background-color: #000;
             color: #e7e9ea;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
+            justify-content: center;
         }
         .container {
             background-color: #16181c;
@@ -23,6 +24,12 @@
             text-align: center;
             max-width: 500px;
             width: 100%;
+        }
+        .logo {
+            width: 80%;
+            max-width: 150px;
+            margin: 0 auto 20px auto;
+            display: block;
         }
         h1 {
             color: #ffffff;
@@ -85,10 +92,11 @@
     </style>
 </head>
 <body>
+    <img src="logo.png" alt="X logo" class="logo">
     <div class="container">
         <h1>Elon Musk Account Verifier</h1>
-        <p class="description" id="description">Many scammers and bots pretend to be Elon Musk in order to deceive people. This tool allows you to verify if a Twitter account truly belongs to Elon Musk. Please be cautious—if someone claims to be Elon Musk and asks you to do things like send cryptocurrency or purchase gift cards, they are a scammer. Do not share any personal information and consider reporting or blocking suspicious accounts.</p>
-        <p>Enter the Twitter handle below to verify if it's Elon Musk's official account:</p>
+        <p class="description" id="description">Many scammers and bots pretend to be Elon Musk in order to deceive people. This tool allows you to verify if an X account truly belongs to Elon Musk. Please be cautious—if someone claims to be Elon Musk and asks you to do things like send cryptocurrency or purchase gift cards, they are a scammer. Do not share any personal information and consider reporting or blocking suspicious accounts.</p>
+        <p>Enter the X handle below to verify if it's one of Elon Musk's official accounts:</p>
         <input type="text" id="twitterHandle" placeholder="@username">
         <button id="verifyButton">Verify Account</button>
         <div id="result" class="result"></div>
@@ -120,7 +128,7 @@
                 resultElement.textContent = "⚠️ No, this is NOT Elon Musk. Do not trust anyone pretending to be Elon!";
                 resultElement.classList.remove('success');
                 resultElement.classList.add('warning');
-                guidanceElement.textContent = "If someone is pretending to be Elon Musk, please report the account to Twitter and avoid any further interaction.";
+                guidanceElement.textContent = "If someone is pretending to be Elon Musk, please report the account to X and avoid any further interaction.";
                 descriptionElement.style.display = "block";
             }
         }
