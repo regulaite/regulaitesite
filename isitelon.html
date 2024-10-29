@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elon Musk Account Verifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #e7e9ea;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #16181c;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p.description {
+            font-size: 14px;
+            color: #71767b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            display: none;
+            border: 1px solid #f4212e;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            width: 90%;
+            margin-bottom: 15px;
+            border: 1px solid #2f3336;
+            border-radius: 30px;
+            background-color: #000;
+            color: #e7e9ea;
+            font-size: 16px;
+        }
+        input[type="text"]::placeholder {
+            color: #71767b;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #1d9bf0;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #1a8cd8;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .warning {
+            color: #f4212e;
+        }
+        .success {
+            color: #00ba7c;
+        }
+        a {
+            color: #1d9bf0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Elon Musk Account Verifier</h1>
+        <p class="description" id="description">Many scammers and bots pretend to be Elon Musk in order to deceive people. This tool allows you to verify if a Twitter account truly belongs to Elon Musk. Please be cautious—if someone claims to be Elon Musk and asks you to do things like send cryptocurrency or purchase gift cards, they are a scammer. Do not share any personal information and consider reporting or blocking suspicious accounts.</p>
+        <p>Enter the Twitter handle below to verify if it's Elon Musk's official account:</p>
+        <input type="text" id="twitterHandle" placeholder="@username">
+        <button id="verifyButton">Verify Account</button>
+        <div id="result" class="result"></div>
+        <p id="guidance" class="guidance"></p>
+    </div>
+
+    <script>
+        document.getElementById('verifyButton').addEventListener('click', checkHandle);
+        document.getElementById('twitterHandle').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkHandle();
+            }
+        });
+
+        function checkHandle() {
+            const handle = document.getElementById('twitterHandle').value.trim().toLowerCase();
+            const resultElement = document.getElementById('result');
+            const guidanceElement = document.getElementById('guidance');
+            const descriptionElement = document.getElementById('description');
+
+            if (handle === '@elonmusk' || handle === 'elonmusk') {
+                resultElement.textContent = "✅ Yes, this is Elon Musk's real account.";
+                resultElement.classList.remove('warning');
+                resultElement.classList.add('success');
+                guidanceElement.innerHTML = "You can visit the official account here: <a href='https://twitter.com/elonmusk' target='_blank'>@elonmusk</a>.";
+                descriptionElement.style.display = "none";
+            } else {
+                resultElement.textContent = "⚠️ No, this is NOT Elon Musk. Do not trust anyone pretending to be Elon!";
+                resultElement.classList.remove('success');
+                resultElement.classList.add('warning');
+                guidanceElement.textContent = "If someone is pretending to be Elon Musk, please report the account to Twitter and avoid any further interaction.";
+                descriptionElement.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
