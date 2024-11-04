@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Permit Submission</title>
+    <style>
+        /* Basic reset and responsive setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 1em;
+            font-size: 1.25em;
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .duration-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .duration-buttons button {
+            flex: 1;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        .duration-buttons button.active, button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        button.submit-button {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Parking Permit Submission</h2>
+        <form id="permitForm">
+            <label for="vehicle">License Plate Number:</label>
+            <input type="text" id="vehicle" name="vehicle" placeholder="Enter license plate" required>
+
+            <label for="duration">Duration:</label>
+            <div class="duration-buttons">
+                <button type="button" onclick="setDuration('PT24H')" id="duration-24">24 Hours</button>
+                <button type="button" onclick="setDuration('PT48H')" id="duration-48">48 Hours</button>
+                <button type="button" onclick="setDuration('PT72H')" id="duration-72">72 Hours</button>
+            </div>
+
+            <label for="tenant">Tenant:</label>
+            <input type="text" id="tenant" name="tenant" placeholder="Enter tenant number" required>
+
+            <label for="token">Token:</label>
+            <input type="text" id="token" name="token" placeholder="Enter token" required>
+
+            <label for="space">Space:</label>
+            <input type="text" id="space" name="space" placeholder="Enter space (e.g., 107A)" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter email address" required>
+
+            <label for="tel">Phone Number:</label>
+            <input type="tel" id="tel" name="tel" placeholder="Enter phone number" required>
+
+            <button type="button" class="submit-button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const validSpaces = [
+            "00 GUEST", "1 GUEST", "2 GUEST", "3 GUEST", "4 GUEST", "5 GUEST", "6 GUEST", "7 GUEST", "8 GUEST", "9 GUEST",
+            "10 GUEST", "11 GUEST", "12 GUEST", "23 GUEST", "25 GUEST", "27 GUEST", "28 GUEST", "30 GUEST", "32 GUEST",
+            "35A GUEST", "35B GUEST", "53 GUEST", "54 GUEST", "55 GUEST", "67 GUEST", "68 GUEST", "69 GUEST", "69A GUEST",
+            "70 GUEST", "77 GUEST", "78 GUEST", "83A GUEST", "91 GUEST", "95 GUEST", "95A GUEST", "96 GUEST", "97 GUEST",
+            "100 GUEST", "101 GUEST", "102 GUEST", "103 GUEST", "104 GUEST", "105 GUEST", "106 GUEST", "107 GUEST",
+            "107A GUEST", "107B GUEST", "108 GUEST", "116 GUEST", "117 GUEST", "118 GUEST", "119 GUEST", "119A GUEST",
+            "119B GUEST", "120 GUEST", "122 GUEST", "130 GUEST", "131 GUEST", "132 GUEST", "133 GUEST", "133A GUEST",
+            "137 GUEST", "144 GUEST", "145 GUEST", "146 GUEST", "148 GUEST", "152 GUEST", "156 GUEST", "157 GUEST",
+            "173 GUEST", "187A GUEST", "193 GUEST", "197 GUEST", "201 GUEST", "205 GUEST", "210 GUEST", "211 GUEST",
+            "212 GUEST"
+        ];
+
+        let selectedDuration = '';
+
+        function setDuration(duration) {
+            selectedDuration = duration;
+
+            document.querySelectorAll('.duration-buttons button').forEach(button => button.classList.remove('active'));
+
+            if (duration === 'PT24H') document.getElementById('duration-24').classList.add('active');
+            if (duration === 'PT48H') document.getElementById('duration-48').classList.add('active');
+            if (duration === 'PT72H') document.getElementById('duration-72').classList.add('active');
+        }
+
+        function validateAndFormatSpace(space) {
+            let formattedSpace = space.toUpperCase();
+            if (/^\d+$/.test(formattedSpace)) {
+                formattedSpace += " GUEST";
+            }
+            return validSpaces.includes(formattedSpace) ? formattedSpace : null;
+        }
+
+        function submitForm() {
+            const vehicle = document.getElementById("vehicle").value;
+            const tenant = document.getElementById("tenant").value;
+            const token = document.getElementById("token").value;
+            const spaceInput = document.getElementById("space").value;
+            const email = document.getElementById("email").value;
+            const tel = document.getElementById("tel").value;
+
+            if (!selectedDuration) {
+                alert("Please select a duration.");
+                return;
+            }
+
+            const formattedSpace = validateAndFormatSpace(spaceInput);
+            if (!formattedSpace) {
+                alert("Please enter a valid space (e.g., '107A GUEST').");
+                return;
+            }
+
+            const data = new FormData();
+            data.append("location", "pa1tz5fh3n0g9fpmc5kqwr4az0");
+            data.append("policy", "r3x32jgfds2sq6y203khb917hm");
+            data.append("vehicle", vehicle);
+            data.append("tenant", tenant);
+            data.append("token", token);
+            data.append("space", formattedSpace);
+            data.append("duration", selectedDuration);
+            data.append("email", email);
+            data.append("tel", tel);
+
+            const options = {
+                method: "POST",
+                headers: {
+                    "accept": "*/*",
+                    "accept-language": "en-US,en;q=0.9",
+                    "origin": "https://olp.parkingattendant.com",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "cross-site"
+                },
+                body: data
+            };
+
+            fetch("https://api.parkingboss.com/v1/permits/temporary", options)
+                .then(response => {
+                    if (response.ok) {
+                        alert("Permit request submitted successfully!");
+                        window.location.href = "https://olp.parkingattendant.com/p/hqcyqq2ets7dk92scqxm2zkgq4";
+                    } else {
+                        alert("Failed to submit permit request. Please check your inputs.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("There was an error submitting the permit request. Please try again.");
+                });
+        }
+    </script>
+</body>
+</html>
